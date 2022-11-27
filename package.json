@@ -1,0 +1,78 @@
+{
+  "proxy": "http://localhost:3001" , 
+
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
+  "name": "voting",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "child_process": "^1.0.2",
+    "cors": "^2.8.5",
+    "cryptocurrency-icons": "^0.18.1",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "http-proxy-middleware": "^2.0.6",
+    "path-browserify": "^1.0.1",
+    "polyfill": "^0.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.3",
+    "react-scripts": "^5.0.1",
+    "serialport": "^9.2.8",
+    "socket-client": "^1.0.0",
+    "socket.io": "^4.5.4",
+    "socket.io-client": "^4.5.4",
+    "util": "^0.12.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "options": {
+    "allowedHosts": ["*"]
+  },
+  "devDependencies": {
+    "assert": "^2.0.0",
+    "autoprefixer": "^10.4.13",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "https-browserify": "^1.0.0",
+    "os-browserify": "^0.3.0",
+    "postcss": "^8.4.19",
+    "process": "^0.11.10",
+    "react-app-rewired": "^2.2.1",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "tailwindcss": "^3.2.4",
+    "url": "^0.11.0"
+  }
+}
