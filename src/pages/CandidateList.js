@@ -130,18 +130,18 @@ class Candilist extends React.Component {
             )}
           </ul>
 
-          <div className="grid  grid-cols-7 m-20 gap-4">
+          <div className="grid  grid-cols-7 m-20 gap-11">
             {this.state.candidates.map((candidate) => {
               if (this.state.selectedCandidate == candidate) {
                 return (
                   <div
                     key={candidate}
                     onClick={() => this.selectCandidate(candidate)}
-                    className=" relative m-5 border border-gray-400 rounded-xl h-24"
+                    className="  relative border border-gray-200 rounded-xl w-16 h-auto"
                   >
-                    <img className="p-5 z-10 " src={candidate}></img>
+                    <img className="p-2 object-contain w-max" src={candidate}></img>
                     <img
-                      className=" absolute top-8 left-8 transform: rotate-12 p-5 z-30 "
+                      className="absolute  rounded-xl bottom-1 right-0 h-auto  w-8/12 z-30 "
                       width={80}
                       src={swastik}
                     ></img>
@@ -152,9 +152,9 @@ class Candilist extends React.Component {
                   <div
                     key={candidate}
                     onClick={() => this.selectCandidate(candidate)}
-                    className="m-5 border border-gray-400 rounded-xl h-24"
+                    className=" border border-gray-200 rounded-xl w-16 h-auto"
                   >
-                    <img className="p-5" src={candidate}></img>
+                    <img className="p-2 object-contain w-max " src={candidate}></img>
                   </div>
                 )
               }
