@@ -17,9 +17,9 @@
           
                   <div className="flex justify-center items-center h-screen mx-auto ">
                       <div className="spinner-border animate-bounce inline-block w-11/12 px-5 text-center rounded-full">
-                        <h1 className=" text-4xl font-bold  ">
-                        <span className="text-red-800">{this.props.message}</span> Please consult helpdesk. 
-
+                        <h1 className=" text-4xl font-semibold  ">
+                        <span className="text-red-500 font-bold">{this.props.message}</span> <h1 className='mt-2'>Please consult helpdesk. 
+                        </h1>
                         </h1>
                     </div>
                   </div>

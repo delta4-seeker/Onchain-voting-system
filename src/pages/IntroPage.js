@@ -26,9 +26,9 @@ class Intro extends React.Component {
 
         <div className=" flex justify-center items-center h-screen mx-auto  ">
             <div className="spinner-border animate-bounce inline-block w-11/12 px-5 text-center rounded-full">
-              <h1 className=" text-2xl md:text-4xl font-bold  ">
-                Welcome to OnChain Voting System.
-                <span className="text-green-800">
+              <h1 className=" text-2xl md:text-4xl font-semibold  ">
+               <h1 className='mb-2'>  Welcome to OnChain Voting System.</h1>
+                <span className="text-green-500  font-bold">
                   {' '}
                   Insert your voting card!
                 </span>

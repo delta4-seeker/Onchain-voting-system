@@ -75,9 +75,11 @@ class Candilist extends React.Component {
     const sleep = (milliseconds) => {
       return new Promise(resolve => setTimeout(resolve, milliseconds))
     }
+    this.setState({ balance : 0});  
 
     await sleep(1000);
     this.setState({ message: 'complete' })
+
 
     
   }

@@ -1,13 +1,10 @@
-
+var express = require('express')
 var cors = require('cors')
-
-var express = require('express'),
-    app = express()
-    app.use(cors())
-
-    server = require('http').Server(app),
-    io = require('socket.io')(server),
-    port = 3001;
+app = express()
+app.use(cors())
+server = require('http').Server(app)
+io = require('socket.io')(server)
+port = 3001
 
 //Server start
 server.listen(port, () => console.log('on port' + port))
@@ -19,19 +16,18 @@ server.listen(port, () => console.log('on port' + port))
 //     next();
 //     })
 
-io.on('connection', onConnection);
+io.on('connection', onConnection)
 
-var connectedSocket = null;
-function onConnection(socket){
-    connectedSocket = socket;
+var connectedSocket = null
+function onConnection(socket) {
+  connectedSocket = socket
 }
 
-
-const SerialPort = require('serialport');
-const Readline = SerialPort.parsers.Readline; 
-const usbport = new SerialPort('COM3');  
-const parser = usbport.pipe(new Readline(  {delimiter: '\r\n'} )); 
+const SerialPort = require('serialport')
+const Readline = SerialPort.parsers.Readline
+const usbport = new SerialPort('COM3')
+const parser = usbport.pipe(new Readline({ delimiter: '\r\n' }))
 parser.on('data', function (data) {
-    console.log(data);
-    io.emit('serialdata', { data: data });
-});
+  console.log(data)
+  io.emit('serialdata', { data: data })
+})
