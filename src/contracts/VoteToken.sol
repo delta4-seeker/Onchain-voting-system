@@ -1,19 +1,19 @@
 // SPDX-License-Identifier: MIT
 pragma solidity^0.8.17 ; 
 contract VoteToken { 
-    uint256 VoterCount  ; 
-   string TokenName = "Maat" ; 
-   bool airDrop ; 
+    uint256 public  VoterCount  ; 
+   string  public TokenName = "Maat" ; 
+   bool public  airDrop ; 
 
-   mapping(address => bool) BlacklistVoters ; 
-   mapping(uint256 => address) VoterList ; 
-   address[] Voters ; 
-   address[] Candidate ;
-   mapping(address => uint256) VoteCount ; 
+   mapping(address => bool) public  BlacklistVoters ; 
+   mapping(uint256 => address) public  VoterList ; 
+   address[] public  Voters ; 
+   address[] public  Candidate ;
+   mapping(address => uint256) public  VoteCount ; 
 
 
     mapping(address => uint256) public balanceOf ; 
-    address ElectionCommission;
+    address public  ElectionCommission;
      constructor(){
         ElectionCommission = msg.sender ; 
          airDrop = true ; 
