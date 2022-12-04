@@ -3,27 +3,28 @@ pragma solidity^0.8.17 ;
 contract VoteToken { 
     uint256 public  VoterCount  ; 
    string  public TokenName = "Maat" ; 
-   bool public  airDrop ; 
 
    mapping(address => bool) public  BlacklistVoters ; 
    mapping(uint256 => address) public  VoterList ; 
    address[] public  Voters ; 
-   address[] public  Candidate ;
+   address[] public  Candidate ; 
    mapping(address => uint256) public  VoteCount ; 
-
-
+   event VoterAdded(address voter) ; 
+   event CandidateData(address candidate , uint256 count);
+   event CandidateList(address candidate , string image ,string residence );
     mapping(address => uint256) public balanceOf ; 
     address public  ElectionCommission;
      constructor(){
         ElectionCommission = msg.sender ; 
-         airDrop = true ; 
      }
-     function addCandidate(address _candidate) public returns (bool) {
+     function addCandidate(address _candidate , string memory image , string memory residence) public returns (bool) {
          require(msg.sender == ElectionCommission , "Only ElectionCommision can call this function.");
          require( _candidate != msg.sender) ; 
          require(!BlacklistVoters[_candidate] , "This address is Blacklisted");
          Candidate.push(_candidate) ; 
-         VoteCount[_candidate] = 0 ; 
+         VoteCount[_candidate] = 0 ;
+         emit CandidateList(_candidate ,  image , residence );
+
          return true;
      }
 
@@ -46,25 +47,20 @@ contract VoteToken {
         VoterCount = VoterCount + 1 ; 
         VoterList[VoterCount] = _voter ; 
         Voters.push(_voter);
-        balanceOf[_voter] = 0 ; 
+        balanceOf[_voter] = 1 ; 
+      emit VoterAdded(_voter) ; 
+
       return true ; 
 
      }
-     function AirDrop() public returns (bool) {
-      require ( msg.sender == ElectionCommission);
-      require( airDrop , " AirDrop already done!" );
-      for(uint id = 0 ; id < Voters.length ; id++){
-         balanceOf[Voters[id]] = 1 ; 
-      }
-      // airDrop = false ; 
-      return true ; 
-     }
 
-     function Vote(address _candidate , address voter) public returns (bool) { 
+     function Vote(address _candidate , address _voter) public returns (bool) { 
             require (msg.sender == ElectionCommission);
-            require(balanceOf[voter] > 0 , "Insufficient balance.");
-            VoteCount[_candidate] = VoteCount[_candidate] + balanceOf[voter] ; 
-            balanceOf[voter] = 0 ; 
+            require(balanceOf[_voter] > 0 , "Insufficient balance.");
+            VoteCount[_candidate] = VoteCount[_candidate] + balanceOf[_voter] ; 
+            balanceOf[_voter] = 0 ; 
+            emit CandidateData( _candidate , VoteCount[_candidate]);
+
             return true ; 
      }
 }

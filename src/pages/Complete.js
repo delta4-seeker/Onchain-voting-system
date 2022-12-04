@@ -1,9 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link,Redirect } from 'react-router-dom'
 class Complete extends React.Component {
 
-
-
+  
   render() {
 
       return (
@@ -27,15 +26,7 @@ class Complete extends React.Component {
               </div>
           </div>
 
-          <div className=" flex justify-center items-center h-screen mx-auto ">
-              <div className="spinner-border animate-bounce inline-block  w-11/12 px-5 text-center   font-semibold rounded-full">
-                <h1 className=" text-4xl   ">
-                  Voting Process{' '}
-                  <span className="text-green-500   font-bold">Successful</span>. You can
-                  remove your card.
-                </h1>
-              </div>
-          </div>
+         
         </div>
       )
     }

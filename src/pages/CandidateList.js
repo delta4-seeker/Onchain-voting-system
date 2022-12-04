@@ -9,14 +9,17 @@ import wolf from '../images/wolf.jpg'
 import parrot from '../images/parrot.jpg'
 import lion from '../images/lion.jpg'
 import dog from '../images/dog.jpg'
-
+import Web3 from 'web3'
+import VoteToken from '../abis/VoteToken.json'
 import React from 'react'
 import Errors from './Error'
 import Complete from './Complete'
 import { Link } from 'react-router-dom'
+let candidateList = []; 
 
 class Candilist extends React.Component {
   state = {}
+  
   constructor(props) {
     console.log(props);
     super(props)
@@ -25,7 +28,7 @@ class Candilist extends React.Component {
       message: 'processing',
       address: "",
       account: "",
-      balance: 1,
+      balance: 0,
       candidates: [
         cat,dog,lion,parrot,wolf,owl,panda,lemur,koala,fox
       ],
@@ -34,6 +37,37 @@ class Candilist extends React.Component {
     this.helperFunction = this.helperFunction.bind(this)
     console.log(this.state.account)
     console.log(this.state.address)
+    this.loadBlockchainData();
+  }
+
+
+  async loadBlockchainData() {
+    const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545')
+    await window.ethereum.enable();
+    const accounts = await web3.eth.getAccounts();
+    const deployer = accounts[0];
+    const abi = VoteToken.abi ; 
+    const address = VoteToken.networks['5777'].address ; 
+    console.log("token address : " , address);
+    const voteToken =  new web3.eth.Contract(abi , address)
+    candidateList = [];
+    let result = await voteToken.getPastEvents('CandidateList' , {    fromBlock: 0,
+      toBlock: 'latest',} );
+      console.log(" ");
+
+      result.map(items => {
+         candidateList.push( {
+          "candidate" : items.returnValues.candidate, 
+          "image" :  items.returnValues.image,
+          "resident" : items.returnValues.residence
+         });
+      
+      })
+    console.log("result : " , candidateList );
+    this.setState({ candidates : candidateList})
+    let Fetchedbalance = await voteToken.methods.balanceOf(this.state.account).call() ; 
+    this.setState({ balance : Fetchedbalance})
+    console.log("balance : " , Fetchedbalance);   
   }
 
   helperFunction = async  () => {
@@ -43,6 +77,7 @@ class Candilist extends React.Component {
       account : data.account
     });
   }
+
   async componentDidMount() {
     await this.helperFunction();
     //check balance of account
@@ -55,22 +90,33 @@ class Candilist extends React.Component {
     } else {
       this.setState({ message: 'lowBalance' })
     }
-
   }
 
   async selectCandidate(candidate) {
-    await this.setState({ selectedCandidate: candidate })
+
+     this.setState({ selectedCandidate: candidate })
     console.log(this.state.selectedCandidate)
   }
   async handleConfirm() {
     this.setState({ message: 'processing' })
 
-    const sleep = (milliseconds) => {
-      return new Promise(resolve => setTimeout(resolve, milliseconds))
-    }
-    this.setState({ balance : 0});  
+      const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545')
+      await window.ethereum.enable();
+      const accounts = await web3.eth.getAccounts();
+      const deployer = accounts[0];
+      const abi = VoteToken.abi ; 
+      const address = VoteToken.networks['5777'].address ; 
+      console.log("token address : " , address);
+      const voteToken =  new web3.eth.Contract(abi , address)
+      console.log("candidate account is ",this.state.selectedCandidate.candidate);
+      console.log("voter account is     ",this.state.account);
+      let result = await voteToken.methods.Vote( this.state.selectedCandidate.candidate , this.state.account).send({
+        from : deployer , 
+        gas : 999999 
+      }) ; 
+      console.log("result is : " , result)
 
-    await sleep(1000);
+    
     this.setState({ message: 'complete' })
 
 
@@ -127,14 +173,14 @@ class Candilist extends React.Component {
 
           <div className="grid  grid-cols-5 m-10 gap-11">
             {this.state.candidates.map((candidate) => {
-              if (this.state.selectedCandidate == candidate) {
+              if (this.state.selectedCandidate === candidate) {
                 return (
                   <div
-                    key={candidate}
+                    key={candidate.candidate}
                     onClick={() => this.selectCandidate(candidate)}
                     className="  relative border border-gray-200 rounded-xl w-24 h-auto"
                   >
-                    <img className="p-2 object-contain w-max" src={candidate}></img>
+                    <img className="p-2 object-contain w-max" src={ candidate.image}></img>
                     <img
                       className="absolute  rounded-xl bottom-1 right-0 h-auto  w-8/12 z-30 "
                       width={80}
@@ -145,11 +191,11 @@ class Candilist extends React.Component {
               } else {
                 return (
                   <div
-                    key={candidate}
+                    key={candidate.candidate}
                     onClick={() => this.selectCandidate(candidate)}
                     className=" border border-gray-200 rounded-xl w-24 h-auto"
                   >
-                    <img className="p-2 object-contain w-max " src={candidate}></img>
+                    <img className="p-2 object-contain w-max " src={candidate.image}></img>
                   </div>
                 )
               }

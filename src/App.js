@@ -22,31 +22,52 @@ class App extends React.Component {
       this.socket = await io('http://localhost:3001')
       this.socket.open();
       await this.socket.on('serialdata', (data) => {
-        console.log('data from react ', data)
         this.setState({
           data: data,
         })
       })
     } catch (error) {}
-    // this.loadBlockchainData()
+    await this.loadBlockchainData()
   }
 
   async loadBlockchainData() {
     const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545')
     await window.ethereum.enable();
     // console.log("web3 " , web3)
+    const accounts = await web3.eth.getAccounts()
+    const deployer = accounts[0];
+
     const abi = VoteToken.abi ; 
     const address = VoteToken.networks['5777'].address ; 
-    console.log("abis : " , abi);
+    // console.log("abis : " , abi);
     console.log("token address : " , address);
-    const voteToken = await new web3.eth.Contract(abi , address)
-    console.log(voteToken);
+    const voteToken =  new web3.eth.Contract(abi , address)
+    // console.log(voteToken);
     const name = await  voteToken.methods.TokenName().call()
     console.log("name : " , name);
 
 
 
- 
+    let result = await voteToken.getPastEvents('CandidateList' , {    fromBlock: 0,
+      toBlock: 'latest',} );
+      console.log(" ");
+      result.map(items => {
+        console.log("candidate : " , items.returnValues.candidate)
+        console.log("image : " , items.returnValues.image)
+        console.log("resident : " , items.returnValues.residence)
+        console.log(" "); 
+      })
+        let voter = "";
+      result = await voteToken.getPastEvents('VoterAdded' , {    fromBlock: 0,
+      toBlock: 'latest',} );
+      console.log(" ");
+      result.map(items => {
+        console.log("voter : " , items.returnValues.voter)
+        console.log(" "); 
+        voter = items.returnValues.voter
+      })
+      
+
 
   }
   render() {
