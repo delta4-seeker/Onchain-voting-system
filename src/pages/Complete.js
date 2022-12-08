@@ -1,10 +1,19 @@
 import React from 'react'
-import { Link,Redirect } from 'react-router-dom'
+import { Link,Redirect, useNavigate } from 'react-router-dom'
+let timer;
 class Complete extends React.Component {
 
-  
+  componentDidMount(){
+    timer=setTimeout(() => {
+        
+      console.log("asd")
+      window.location.replace("/")
+    }, 4000);
+  }
+  componentWillUnmount(){
+    clearTimeout(timer)
+  }
   render() {
-
       return (
         <div className="row-2 ">
           <div>

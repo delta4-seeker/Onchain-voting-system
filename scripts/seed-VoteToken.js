@@ -20,12 +20,15 @@ module.exports = async function (callback) {
   const deployer = accounts[0]
   const candidates = accounts.slice(1, 6)
   // console.log('candidate are : ', candidates)
-  const voters = accounts.slice(1, 10)
+  const voters = accounts.slice(6, 10)
   // console.log('voters are : ', voters)
   // candidateIcons.sort(Math.random())
   const voteToken = await VoteToken.deployed()
   console.log('name : ', await voteToken.TokenName())
-
+  await voteToken.StartVoting({
+    from: deployer,
+    gas: 999999,
+  })
   for(let i = 0 ; i < candidates.length ; i++ ){
     await voteToken.addCandidate(candidates[i], candidateIcons[i], 'location123', {
       from: deployer,
@@ -47,7 +50,7 @@ for(let i = 0 ; i < voters.length ; i++ ){
     console. log("the balance of voter " ,i+1 , " is " , balance.toString() );
 
 // try {
-  
+
 //   await voteToken.Vote( candidates[i] ,voters[i]  ,  { from : deployer , gas : 999999});
 //   balance = await voteToken.balanceOf(voters[i] , {from : deployer ,  gas : 999999}) ; 
 

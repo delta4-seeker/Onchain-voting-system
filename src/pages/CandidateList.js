@@ -110,19 +110,26 @@ class Candilist extends React.Component {
       const voteToken =  new web3.eth.Contract(abi , address)
       console.log("candidate account is ",this.state.selectedCandidate.candidate);
       console.log("voter account is     ",this.state.account);
-      let result = await voteToken.methods.Vote( this.state.selectedCandidate.candidate , this.state.account).send({
-        from : deployer , 
-        gas : 999999 
-      }) ; 
-      console.log("result is : " , result)
+
+      try {
+        let result = await voteToken.methods.Vote( this.state.selectedCandidate.candidate , this.state.account).send({
+          from : deployer , 
+          gas : 999999 
+        })
+
+        console.log(result);
+        
+      } catch (error) {
+
+        this.setState({ message: 'rejected' })
+
+        
+      }
 
     
     this.setState({ message: 'complete' })
 
-
-    
   }
-
 
   render() {
     if (this.state.message === 'processing') {
@@ -205,6 +212,9 @@ class Candilist extends React.Component {
       )
     if (this.state.message === 'lowBalance') {
       return <Errors message="Insufficient balance." />
+    }
+    if (this.state.message === 'rejected') {
+      return <Errors message="Process rejected." />
     }
     if (this.state.message === 'complete') {
       return <Complete />

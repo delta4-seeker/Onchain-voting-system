@@ -36,20 +36,7 @@ class Intro extends React.Component {
             </Link>
           )}
         </div>
-        {  this.props.data === "hello"  ?  
-        
-        <div className=" flex justify-center items-center h-screen mx-auto  ">
-        <div className="spinner-border animate-bounce inline-block w-11/12 px-5 text-center rounded-full">
-          <h1 className=" text-2xl md:text-4xl font-semibold  ">
-            <h1 className="mb-2"> RFID Card reader error. </h1>
-            <span className="text-red-500  font-bold">
-              {' '}
-              Technical Issue
-            </span>
-          </h1>
-        </div>
-      </div> 
-        :  this.props.data.data === 'No card'  ? 
+        {    this.props.data.data === 'No card'  ? 
         <div className=" flex justify-center items-center h-screen mx-auto  ">
           <div className="spinner-border animate-bounce inline-block w-11/12 px-5 text-center rounded-full">
             <h1 className=" text-2xl md:text-4xl font-semibold  ">
@@ -61,6 +48,18 @@ class Intro extends React.Component {
             </h1>
           </div>
         </div> : 
+        this.props.data == 'hello'  ?  
+        <div className=" flex justify-center items-center h-screen mx-auto  ">
+        <div className="spinner-border animate-bounce inline-block w-11/12 px-5 text-center rounded-full">
+          <h1 className=" text-2xl md:text-4xl font-semibold  ">
+            <h1 className="mb-2"> Device Fault</h1>
+            <span className="text-red-500  font-bold">
+              {' '}
+              Consult helpdesk
+            </span>
+          </h1>
+        </div>
+        </div>:
 
 <div className=" flex justify-center items-center h-screen mx-auto  ">
 <div className="spinner-border animate-bounce inline-block w-11/12 px-5 text-center rounded-full">

@@ -7,6 +7,7 @@ import errors from './pages/Error'
 import Web3 from 'web3'
 import VoteToken from './abis/VoteToken.json'
 import  io  from 'socket.io-client'
+import AdminAuth from './components/AdminAuth'
 class App extends React.Component {
   state = {}
 
@@ -40,11 +41,11 @@ class App extends React.Component {
     const abi = VoteToken.abi ; 
     const address = VoteToken.networks['5777'].address ; 
     // console.log("abis : " , abi);
-    console.log("token address : " , address);
+    // console.log("token address : " , address);
     const voteToken =  new web3.eth.Contract(abi , address)
     // console.log(voteToken);
     const name = await  voteToken.methods.TokenName().call()
-    console.log("name : " , name);
+    // console.log("name : " , name);
 
 
 
@@ -52,18 +53,18 @@ class App extends React.Component {
       toBlock: 'latest',} );
       console.log(" ");
       result.map(items => {
-        console.log("candidate : " , items.returnValues.candidate)
-        console.log("image : " , items.returnValues.image)
-        console.log("resident : " , items.returnValues.residence)
-        console.log(" "); 
+        // console.log("candidate : " , items.returnValues.candidate)
+        // console.log("image : " , items.returnValues.image)
+        // console.log("resident : " , items.returnValues.residence)
+        // console.log(" "); 
       })
         let voter = "";
       result = await voteToken.getPastEvents('VoterAdded' , {    fromBlock: 0,
       toBlock: 'latest',} );
       console.log(" ");
       result.map(items => {
-        console.log("voter : " , items.returnValues.voter)
-        console.log(" "); 
+        // console.log("voter : " , items.returnValues.voter)
+        // console.log(" "); 
         voter = items.returnValues.voter
       })
       
@@ -74,6 +75,7 @@ class App extends React.Component {
     return (
       <div className="overflow-hidden">
         <Routes>
+     
           <Route
             path="/candilist"
             element={<Candilist data={this.state.data} />}
@@ -81,6 +83,8 @@ class App extends React.Component {
           <Route path="/errors" element={errors} />
           <Route path="/complete" element={<Complete />} />
           <Route path="/" exact element={<Intro data={this.state.data} />} />
+          <Route path='/admin/*' element={<AdminAuth/>}/>
+
         </Routes>
       </div>
     )
