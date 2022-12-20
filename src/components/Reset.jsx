@@ -22,13 +22,13 @@ let handleReset = async ()=> {
 
   return (
     <div className="flex px-12 py-2 flex-col m-2 bg-white w-[95%] shadow-lg h-5/6">
-      <h1 className="text-2xl text-blue-500 font-bold py-4 border-b-2 border-gray-200 ">
+      <h1 className="text-2xl text-blue-500 font-bold py-4 border-b-2  ">
       Reset
       </h1>
-      <div className="flex flex-col px-4 py-5 items-start text-md border-b-2 border-gray-200 w-full">
+      <div className="flex flex-col px-4 py-5 items-start text-md border-b-2  w-full">
         <div className="flex justify-start items-start ">
           <h1 className="text-md mr-2">Reset Election: </h1>
-          <div className="border-2 border-gray-200 rounded-lg">
+          <div className="border-2  rounded-lg">
             <button onClick={handleReset} className="bg-red-500 text-white   rounded-md py-2 px-4">
               Reset
             </button>

@@ -2,6 +2,7 @@
 pragma solidity^0.8.17 ; 
 contract VoteToken { 
    uint256 public  VoterCount  ; 
+   uint256 public  CandidateCount  ; 
    uint256 public  TotalVoteCount  ; 
    string  public TokenName = "Maat" ; 
    bool votingStarted = false ; 
@@ -25,6 +26,7 @@ contract VoteToken {
          require(!BlacklistVoters[_candidate] , "This address is Blacklisted");
          Candidate.push(_candidate) ; 
          VoteCount[_candidate] = 0 ;
+         CandidateCount = CandidateCount + 1 ; 
          emit CandidateList(_candidate ,  image , residence );
 
          return true;
@@ -41,6 +43,8 @@ contract VoteToken {
                Candidate[i] = lastAddress ; 
                Candidate.pop();
          }}
+                  CandidateCount = CandidateCount - 1 ; 
+
          delete VoteCount[_candidate] ; 
          return true;
      }

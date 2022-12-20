@@ -18,9 +18,9 @@ module.exports = async function (callback) {
   ]
   const accounts = await web3.eth.getAccounts()
   const deployer = accounts[0]
-  const candidates = accounts.slice(1, 6)
+  const candidates = accounts.slice(1, 11)
   // console.log('candidate are : ', candidates)
-  const voters = accounts.slice(6, 10)
+  const voters = accounts.slice(11, 21)
   // console.log('voters are : ', voters)
   // candidateIcons.sort(Math.random())
   const voteToken = await VoteToken.deployed()
@@ -44,10 +44,10 @@ for(let i = 0 ; i < voters.length ; i++ ){
       from: deployer,
       gas: 999999,
     })
-    console.log('Voter' , i+1 ," added : ")
-    console.log('Voter ' ,  voters[i] )
+    // console.log('Voter' , i+1 ," added : ")
+    console.log(  voters[i] )
     let balance = await voteToken.balanceOf(voters[i] , {from : deployer ,  gas : 999999}) ; 
-    console. log("the balance of voter " ,i+1 , " is " , balance.toString() );
+    // console. log("the balance of voter " ,i+1 , " is " , balance.toString() );
 
 // try {
 

@@ -8,6 +8,7 @@ import VoteToken from '../abis/VoteToken.json'
 const Dashboard = () => {
 
   const [voterCount, setVoterCount] = useState("")
+  const [CandidateCount, setCandidateCount] = useState("")
   const [voteCount, setVoteCount] = useState("")
   const [remainingVote, setRemainingVote] = useState("")
   const [timeStarted, setTimeStarted] = useState("")
@@ -32,6 +33,8 @@ let LoadBlockchainData= async ()=> {
     const voterCount = await  voteToken.methods.VoterCount().call();
     console.log("voterCount : " , voterCount )
     setVoterCount(voterCount)
+    const CandidateCount = await  voteToken.methods.CandidateCount().call();
+    setCandidateCount(CandidateCount)
     const voteCount = await  voteToken.methods.TotalVoteCount().call();
     console.log("voteCount : " , voteCount )
     setVoteCount(voteCount)
@@ -147,7 +150,7 @@ let LoadBlockchainData= async ()=> {
 
   return (
     <div className="flex px-12 py-2 flex-col m-2 shadow-lg bg-white w-[95%] h-5/6  ">
-      <h1 className="text-2xl text-blue-500 font-bold py-4 border-b-2 border-gray-200">
+      <h1 className="text-2xl text-blue-500 font-bold py-4 border-b-2 ">
         Dashboard
       </h1>
      <div className="grid grid-row2">
@@ -168,7 +171,7 @@ let LoadBlockchainData= async ()=> {
       </div>
       <div className="row-start-1 row-end-4">
       <div className="text-sm py-5 font-semibold">
-      <h1 className="">Total Candidates: {voterCount}</h1>
+      <h1 className="">Total Candidates: {CandidateCount}</h1>
       <h1 className="">Total election poll: 32</h1>
         <h1 className="">Total EVM nodes: 160</h1>
         <h1 className="">
